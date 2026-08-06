@@ -1,0 +1,48 @@
+---
+// Source : cv.md — section Compétences techniques
+
+const categories = [
+  {
+    label: 'Langages',
+    items: ['Python', 'SQL', 'Java', 'C', 'R', 'TypeScript'],
+  },
+  {
+    label: 'IA & Agents',
+    items: ['LangGraph', 'LangChain', 'FastMCP (MCP)', 'RAG', 'LLMs (LLaMA, GPT)', 'n8n'],
+  },
+  {
+    label: 'ML & Data Science',
+    items: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'XGBoost', 'Random Forest', 'Pandas', 'Seaborn'],
+  },
+  {
+    label: 'Data Engineering',
+    items: ['ETL/ELT', 'Scrapy', 'Spark', 'Kibana', 'Grafana', 'Dash', 'Streamlit'],
+  },
+  {
+    label: 'Bases de données',
+    items: ['PostgreSQL', 'MongoDB', 'Redis', 'GraphQL', 'MySQL'],
+  },
+  {
+    label: 'Infrastructure & DevOps',
+    items: ['Docker', 'Kubernetes', 'GitOps/DevOps', 'CI/CD', 'GitHub', 'GitLab', 'Linux'],
+  },
+];
+---
+
+<section id="skills" class="max-w-5xl mx-auto px-6 py-24">
+  <h2 class="text-3xl font-bold mb-12 text-white">Compétences</h2>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    {categories.map((cat) => (
+      <div>
+        <h3 class="text-sm font-semibold text-indigo-400 uppercase tracking-wider mb-4">{cat.label}</h3>
+        <div class="flex flex-wrap gap-2">
+          {cat.items.map((item) => (
+            <span class="px-3 py-1 bg-gray-800 text-gray-300 text-sm rounded-md border border-gray-700">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

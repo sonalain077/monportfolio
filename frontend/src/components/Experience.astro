@@ -1,0 +1,66 @@
+---
+// Source : cv.md — section Expériences professionnelles et stages
+
+const experiences = [
+  {
+    role: 'Ingénieur IA — Automatisation & analyse des réseaux optiques',
+    company: 'Orange Innovation',
+    type: 'Stage de fin d\'étude',
+    period: '02/2026 – Présent',
+    bullets: [
+      'Conception et développement d\'une architecture d\'agents IA via LangGraph permettant aux techniciens d\'interroger en langage naturel les données de topologie des réseaux optiques d\'Orange.',
+      'Développement de serveurs MCP en Python pour interfacer directement les capacités de raisonnement du LLM avec les bases d\'inventaire et de topologie réseau.',
+      'Utilisation d\'API GraphQL pour requêter, structurer et formater efficacement les données du réseau PostgreSQL.',
+      'Préparation de l\'industrialisation de la solution au sein d\'un environnement GitOps/DevOps avec des pipelines CI/CD.',
+    ],
+  },
+  {
+    role: 'Conception d\'un pipeline d\'analyse thématique avec l\'IA agentique',
+    company: 'Laboratoire Lisis',
+    type: 'Stage de recherche',
+    period: '05/2025 – 08/2025',
+    bullets: [
+      'Étude comparative des biais sociologiques et des comportements de 5 modèles de LLM (LLaMA, GPT) face à des problématiques d\'ordre humain et sociétal.',
+      'Conception d\'une architecture multi-agents LangGraph automatisant la méthode d\'analyse thématique de Braun and Clarke pour traiter un corpus d\'une trentaine d\'entretiens via l\'API Groq.',
+      'Intégration de mécanismes de validation et de cohérence inter-agents pour garantir la fiabilité du codage thématique.',
+    ],
+  },
+  {
+    role: 'Chef de projet commercial',
+    company: 'Junior ESIEE',
+    type: '',
+    period: '01/2025 – 02/2026',
+    bullets: [
+      'Pilotage de plus de 5 missions clients de bout en bout sur des sujets tech, de l\'analyse du besoin à la livraison finale.',
+      'Gestion de budgets allant de 1 000 € à 20 000 € selon la complexité des missions.',
+      'Rédaction des propositions commerciales et soutenances client ; coordination d\'équipes d\'étudiants-consultants.',
+    ],
+  },
+];
+---
+
+<section id="experience" class="max-w-5xl mx-auto px-6 py-24">
+  <h2 class="text-3xl font-bold mb-12 text-white">Expériences</h2>
+  <div class="space-y-12">
+    {experiences.map((exp) => (
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="text-sm text-gray-500 font-mono pt-1">
+          <p>{exp.period}</p>
+          {exp.type && <p class="text-indigo-500 mt-1">{exp.type}</p>}
+        </div>
+        <div class="md:col-span-3">
+          <h3 class="text-lg font-semibold text-white">{exp.role}</h3>
+          <p class="text-indigo-400 mb-4">{exp.company}</p>
+          <ul class="space-y-2">
+            {exp.bullets.map((b) => (
+              <li class="flex gap-3 text-gray-400 text-sm leading-relaxed">
+                <span class="text-indigo-500 mt-1 flex-shrink-0">▸</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

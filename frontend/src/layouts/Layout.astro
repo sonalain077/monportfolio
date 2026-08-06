@@ -1,0 +1,26 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Son Alain Pham Dang — Ingénieur IA',
+  description = 'Portfolio de Son Alain Pham Dang, ingénieur IA diplômé ESIEE Paris, spécialisé en systèmes d\'agents et architectures agentiques.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <!-- TODO: contenu à compléter — ajouter police Inter via Google Fonts ou self-hosted -->
+  </head>
+  <body class="bg-gray-950 text-gray-100 antialiased">
+    <slot />
+  </body>
+</html>

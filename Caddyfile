@@ -1,0 +1,22 @@
+# Remplacer yourdomain.com par votre vrai domaine en production
+# En local, utiliser localhost (Caddy ne tentera pas de générer un certificat)
+
+{$DOMAIN:localhost} {
+	# API backend — doit être avant le catch-all frontend
+	handle /api/* {
+		reverse_proxy backend:3000
+	}
+
+	# Frontend — catch-all
+	handle {
+		reverse_proxy frontend:80
+	}
+
+	# Headers de sécurité
+	header {
+		X-Frame-Options DENY
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+}

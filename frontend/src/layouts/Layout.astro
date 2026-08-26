@@ -2,25 +2,63 @@
 interface Props {
   title?: string;
   description?: string;
+  lang?: 'fr' | 'en';
 }
 
 const {
-  title = 'Son Alain Pham Dang — Ingénieur IA',
-  description = 'Portfolio de Son Alain Pham Dang, ingénieur IA diplômé ESIEE Paris, spécialisé en systèmes d\'agents et architectures agentiques.',
+  title = 'Son Alain Pham Dang | Ingénieur IA',
+  description = 'Ingénieur diplômé d’ESIEE Paris, spécialisé en IA générative, agents IA et développement logiciel.',
+  lang = 'fr',
 } = Astro.props;
+
+const siteOrigin = Astro.site ?? Astro.url.origin;
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin);
+const socialImageUrl = new URL('/og.png', siteOrigin);
+const frenchUrl = new URL('/', siteOrigin);
+const englishUrl = new URL('/en/', siteOrigin);
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7fbff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="fr" href={frenchUrl} />
+    <link rel="alternate" hreflang="en" href={englishUrl} />
+    <link rel="alternate" hreflang="x-default" href={frenchUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
-    <!-- TODO: contenu à compléter — ajouter police Inter via Google Fonts ou self-hosted -->
   </head>
-  <body class="bg-gray-950 text-gray-100 antialiased">
+  <body class="bg-[#f7fbff] text-slate-950 antialiased selection:bg-cyan-200 selection:text-blue-950">
     <slot />
   </body>
 </html>
+
+<style is:global>
+  :root { color-scheme: light; }
+  html { scroll-behavior: smooth; background: #f7fbff; }
+  body {
+    margin: 0;
+    min-width: 320px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  a:focus-visible, button:focus-visible, video:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 4px;
+  }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #eff6ff; }
+  ::-webkit-scrollbar-thumb { background: #93c5fd; border: 3px solid #eff6ff; border-radius: 999px; }
+</style>

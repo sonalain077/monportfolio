@@ -1,0 +1,46 @@
+---
+interface Props { lang?: 'fr' | 'en'; }
+const { lang = 'fr' } = Astro.props;
+const isEn = lang === 'en';
+const emailHref = isEn
+  ? 'mailto:pham.sonalain@gmail.com?subject=Portfolio%20contact'
+  : 'mailto:pham.sonalain@gmail.com?subject=Contact%20depuis%20votre%20portfolio';
+---
+
+<section id="contact" class="relative overflow-hidden bg-gradient-to-br from-blue-700 via-blue-600 to-cyan-500 px-6 py-24 text-white lg:px-10 lg:py-32">
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_75%_50%,rgba(255,255,255,.20),transparent_28%)]"></div>
+  <div class="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.8)_1px,transparent_1px)] [background-size:64px_64px]"></div>
+
+  <div class="relative mx-auto max-w-7xl">
+    <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100">Contact</p>
+    <div class="mt-6 grid gap-12 lg:grid-cols-[1fr_.55fr] lg:items-end">
+      <div>
+        <h2 class="max-w-4xl text-4xl font-semibold leading-[1.06] tracking-[-0.04em] sm:text-6xl">
+          {isEn ? 'Working on an AI project?' : 'Vous travaillez sur un projet IA ?'}<br /><span class="text-blue-200">{isEn ? 'Let’s talk.' : 'Parlons-en.'}</span>
+        </h2>
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-blue-100">
+          {isEn
+            ? 'I am looking for an AI Engineer or Generative AI Engineer position from September 2026. I am mobile across France and open to international opportunities.'
+            : 'Je recherche un poste d’ingénieur IA ou d’ingénieur en IA générative à partir de septembre 2026. Je suis mobile en France et ouvert aux opportunités internationales.'}
+        </p>
+        <div class="mt-9 flex flex-wrap gap-4">
+          <a href={emailHref} class="inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 font-semibold text-blue-700 shadow-xl shadow-blue-950/15 transition hover:bg-blue-50">
+            {isEn ? 'Email me' : 'M’écrire par email'} <span>↗</span>
+          </a>
+          <a href="https://www.linkedin.com/in/son-alain-pham-dang-206328301/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/30 px-6 py-3.5 font-medium text-white transition hover:border-white hover:bg-white/10">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="border-l border-white/25 pl-6 text-sm text-blue-100 sm:pl-8">
+        <p>{isEn ? 'France, open to international opportunities' : 'France, mobilité internationale'}</p>
+        <a class="mt-3 block text-white transition hover:text-cyan-100" href={emailHref}>pham.sonalain@gmail.com</a>
+        <p class="mt-8 font-mono text-xs uppercase tracking-[0.18em] text-emerald-200">● {isEn ? 'Available September 2026' : 'Disponible septembre 2026'}</p>
+      </div>
+    </div>
+
+    <footer class="mt-24 flex flex-col gap-4 border-t border-white/20 pt-7 text-xs text-blue-100 sm:flex-row sm:items-center sm:justify-between">
+      <p>© 2026 Son Alain Pham Dang</p>
+      <p>{isEn ? 'Portfolio designed and built by me.' : 'Portfolio réalisé par mes soins.'}</p>
+    </footer>
+  </div>
+</section>

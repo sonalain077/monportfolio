@@ -1,37 +1,102 @@
 ---
-// Source : cv.md
+interface Props {
+  lang?: 'fr' | 'en';
+}
+
+const { lang = 'fr' } = Astro.props;
+const isEn = lang === 'en';
+
+const copy = isEn ? {
+  caseStudy: 'Case study', experience: 'Experience', projects: 'Projects', contact: 'Contact me',
+  available: 'Available from September 2026', location: 'France, open to international opportunities',
+  specialty: 'AI Engineer, agents and generative AI', titleStart: 'I build AI tools', titleAccent: 'that work in the real world.',
+  intro: 'An ESIEE Paris engineering graduate, I enjoy starting with a concrete problem and building the right tool for it. My work combines generative AI, business data and software development.',
+  cta: 'View the case study', field: 'My focus', agents: 'AI agents', tools: 'Business tools', cv: 'Resume',
+  metrics: [
+    { value: 'End to end', label: 'from a question to a technical report' },
+    { value: '2,172', label: 'optical services modelled' },
+    { value: '< 6 s', label: 'median latency' },
+  ],
+} : {
+  caseStudy: 'Étude de cas', experience: 'Expérience', projects: 'Projets', contact: 'Me contacter',
+  available: 'Disponible dès septembre 2026', location: 'France, mobilité internationale',
+  specialty: 'Ingénieur IA, agents et IA générative', titleStart: 'Je construis des outils d’IA', titleAccent: 'utiles sur le terrain.',
+  intro: 'Diplômé d’ESIEE Paris, j’aime partir d’un problème concret et construire l’outil qui va avec. Mon travail combine IA générative, données métier et développement logiciel.',
+  cta: 'Voir l’étude de cas', field: 'Mon domaine', agents: 'Agents IA', tools: 'Outils métier', cv: 'CV',
+  metrics: [
+    { value: 'De bout en bout', label: 'd’une question au rapport technique' },
+    { value: '2 172', label: 'services optiques modélisés' },
+    { value: '< 6 s', label: 'de latence médiane' },
+  ],
+};
 ---
 
-<section id="hero" class="min-h-screen flex flex-col justify-center px-6 max-w-5xl mx-auto">
-  <p class="text-indigo-400 font-mono text-sm mb-4 tracking-widest uppercase">Disponible à partir de septembre 2026</p>
-  <h1 class="text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
-    Son Alain<br /><span class="text-indigo-400">Pham Dang</span>
-  </h1>
-  <p class="text-xl md:text-2xl text-gray-400 mb-8 max-w-2xl">
-    Ingénieur IA — Architectures agentiques & systèmes LLM
-  </p>
-  <div class="flex flex-wrap gap-4">
-    <a
-      href="#contact"
-      class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg transition-colors"
-    >
-      Me contacter
+<header class="relative min-h-screen overflow-hidden border-b border-blue-100 bg-[#f7fbff] text-slate-950">
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_83%_18%,rgba(56,189,248,.22),transparent_27%),radial-gradient(circle_at_20%_78%,rgba(37,99,235,.10),transparent_25%)]"></div>
+  <div class="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(37,99,235,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,.08)_1px,transparent_1px)] [background-size:72px_72px]"></div>
+
+  <nav class="relative z-20 mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-7 lg:px-10">
+    <a href="#top" class="flex min-w-0 items-center gap-3 text-sm font-semibold tracking-wide text-slate-950">
+      <span class="grid h-10 w-10 flex-none place-items-center rounded-full bg-blue-600 font-mono text-xs text-white shadow-lg shadow-blue-600/20">SAP</span>
+      <span class="hidden truncate sm:block">Son Alain Pham Dang</span>
     </a>
-    <a
-      href="https://github.com/sonalain077"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="px-6 py-3 border border-gray-600 hover:border-indigo-400 text-gray-300 hover:text-white font-medium rounded-lg transition-colors"
-    >
-      GitHub
-    </a>
-    <a
-      href="https://linkedin.com/in/son-alain-pham-dang-206328301"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="px-6 py-3 border border-gray-600 hover:border-indigo-400 text-gray-300 hover:text-white font-medium rounded-lg transition-colors"
-    >
-      LinkedIn
-    </a>
+    <div class="flex items-center gap-2 sm:gap-3">
+      <div class="hidden items-center gap-6 text-sm text-slate-500 lg:flex">
+        <a class="transition-colors hover:text-blue-700" href="#orange-case-study">{copy.caseStudy}</a>
+        <a class="transition-colors hover:text-blue-700" href="#experience">{copy.experience}</a>
+        <a class="transition-colors hover:text-blue-700" href="#projects">{copy.projects}</a>
+        <a class="rounded-full bg-slate-950 px-4 py-2 text-white transition hover:bg-blue-700" href="#contact">{copy.contact}</a>
+      </div>
+      <div class="inline-flex rounded-full border border-blue-100 bg-white p-1 text-xs font-semibold shadow-sm" aria-label={isEn ? 'Choose language' : 'Choisir la langue'}>
+        <a href="/" aria-current={!isEn ? 'page' : undefined} class:list={['rounded-full px-3 py-1.5 transition', !isEn ? 'bg-blue-600 text-white' : 'text-slate-500 hover:text-blue-700']}>FR</a>
+        <a href="/en/" aria-current={isEn ? 'page' : undefined} class:list={['rounded-full px-3 py-1.5 transition', isEn ? 'bg-blue-600 text-white' : 'text-slate-500 hover:text-blue-700']}>EN</a>
+      </div>
+      <details class="group relative">
+        <summary class="flex cursor-pointer list-none items-center gap-1.5 rounded-full border border-blue-100 bg-white px-3.5 py-2 text-xs font-semibold text-blue-700 shadow-sm transition hover:border-blue-300">
+          {copy.cv}<span class="text-blue-400 transition group-open:rotate-180">↓</span>
+        </summary>
+        <div class="absolute right-0 top-[calc(100%+10px)] w-48 overflow-hidden rounded-2xl border border-blue-100 bg-white p-2 text-sm shadow-2xl shadow-blue-950/15">
+          <a href="/cv/son-alain-pham-dang-cv-fr.pdf" target="_blank" rel="noopener noreferrer" class="block rounded-xl px-3 py-2.5 text-slate-700 transition hover:bg-blue-50 hover:text-blue-700">CV français</a>
+          <a href="/cv/son-alain-pham-dang-cv-en.pdf" target="_blank" rel="noopener noreferrer" class="block rounded-xl px-3 py-2.5 text-slate-700 transition hover:bg-blue-50 hover:text-blue-700">English resume</a>
+        </div>
+      </details>
+    </div>
+  </nav>
+
+  <div id="top" class="relative z-10 mx-auto grid min-h-[calc(100vh-96px)] max-w-7xl items-center gap-14 px-6 pb-16 pt-8 lg:grid-cols-[1.08fr_.92fr] lg:px-10 lg:pb-24">
+    <div>
+      <div class="mb-7 flex flex-wrap items-center gap-3">
+        <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-emerald-700 shadow-sm backdrop-blur">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>{copy.available}
+        </span>
+        <span class="text-xs uppercase tracking-[0.18em] text-slate-400">{copy.location}</span>
+      </div>
+      <p class="mb-4 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.specialty}</p>
+      <h1 class="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-6xl lg:text-[4.6rem]">
+        {copy.titleStart} <span class="bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent">{copy.titleAccent}</span>
+      </h1>
+      <p class="mt-7 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl">{copy.intro}</p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="#orange-case-study" class="group inline-flex items-center gap-3 rounded-full bg-blue-600 px-6 py-3.5 font-semibold text-white shadow-xl shadow-blue-600/20 transition hover:bg-blue-700">{copy.cta}<span class="transition-transform group-hover:translate-x-1">→</span></a>
+        <a href="https://www.linkedin.com/in/son-alain-pham-dang-206328301/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-slate-300 bg-white/70 px-6 py-3.5 font-medium text-slate-800 transition hover:border-blue-300 hover:text-blue-700">LinkedIn</a>
+      </div>
+      <div class="mt-12 grid max-w-2xl grid-cols-3 divide-x divide-blue-100 border-y border-blue-100 py-5">
+        {copy.metrics.map((metric, index) => (
+          <div class:list={[index > 0 && 'pl-4 sm:pl-7']}><p class="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">{metric.value}</p><p class="mt-1 text-xs leading-snug text-slate-500 sm:text-sm">{metric.label}</p></div>
+        ))}
+      </div>
+    </div>
+    <div class="relative mx-auto w-full max-w-[520px] lg:max-w-none">
+      <div class="absolute -inset-8 rounded-[3rem] bg-gradient-to-br from-blue-200/60 via-cyan-100/50 to-transparent blur-2xl"></div>
+      <div class="relative ml-auto max-w-[520px]">
+        <div class="overflow-hidden rounded-[2.25rem] border-8 border-white bg-white shadow-2xl shadow-blue-950/15">
+          <img src="/media/son-alain-pham-dang.webp" alt={isEn ? 'Professional portrait of Son Alain Pham Dang' : 'Portrait professionnel de Son Alain Pham Dang'} class="aspect-[4/4.45] w-full object-cover object-[50%_42%]" width="1200" height="1118" loading="eager" />
+        </div>
+        <div class="absolute -bottom-5 -left-5 rounded-2xl border border-blue-100 bg-white/95 p-4 shadow-xl shadow-blue-950/10 backdrop-blur sm:-left-10 sm:p-5">
+          <p class="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-600">{copy.field}</p>
+          <div class="mt-3 flex items-center gap-2 text-sm font-semibold text-slate-800"><span class="h-2 w-2 rounded-full bg-cyan-400"></span>{copy.agents}<span class="text-slate-300">→</span><span class="h-2 w-2 rounded-full bg-blue-600"></span>{copy.tools}</div>
+        </div>
+      </div>
+    </div>
   </div>
-</section>
+</header>

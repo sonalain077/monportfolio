@@ -1,40 +1,51 @@
 ---
-// Source : cv.md — section Profil
+interface Props { lang?: 'fr' | 'en'; }
+const { lang = 'fr' } = Astro.props;
+const isEn = lang === 'en';
+const copy = isEn ? {
+  label: 'About', title: 'What interests me about AI.',
+  intro: 'I recently graduated from ESIEE Paris in Data Science and AI. I am particularly interested in AI agents: specialized assistants that work together and use tools.',
+  detail: 'At Orange Innovation, I learned to put these ideas to work in a real environment, with imperfect data, technical constraints and users who need clear answers.',
+  principles: [
+    ['Product', 'Start with the business need, not the model.'],
+    ['Reliability', 'Measure, trace and validate responses.'],
+    ['Systems', 'Connect AI models to real tools and data.'],
+  ],
+} : {
+  label: 'À propos', title: 'Ce qui m’intéresse dans l’IA.',
+  intro: 'Je viens d’être diplômé d’ESIEE Paris en Data Science et IA. Je m’intéresse surtout aux agents IA, des assistants spécialisés qui travaillent ensemble et utilisent des outils.',
+  detail: 'Chez Orange Innovation, j’ai appris à confronter ces idées à un environnement réel : des données imparfaites, des contraintes techniques et des utilisateurs qui attendent une réponse claire.',
+  principles: [
+    ['Produit', 'Partir du besoin métier, pas du modèle.'],
+    ['Fiabilité', 'Mesurer, tracer et faire valider les réponses.'],
+    ['Systèmes', 'Connecter les modèles d’IA aux outils et aux données réelles.'],
+  ],
+};
 ---
 
-<section id="about" class="max-w-5xl mx-auto px-6 py-24">
-  <h2 class="text-3xl font-bold mb-8 text-white">À propos</h2>
-  <div class="grid md:grid-cols-3 gap-12">
-    <div class="md:col-span-2 space-y-4 text-gray-300 leading-relaxed">
-      <p>
-        Ingénieur diplômé ESIEE Paris en Data Science et IA, spécialisé dans la conception
-        de systèmes d'agents. Expérience chez Orange Innovation sur des architectures
-        agentiques appliquées aux réseaux optiques.
-      </p>
-      <p>
-        Je construis des systèmes où les LLMs font vraiment quelque chose d'utile — pas du
-        chat, mais des agents autonomes capables d'interroger des bases de données, d'orchestrer
-        des pipelines et de s'intégrer dans des environnements de production.
-      </p>
-    </div>
-    <div class="space-y-3 text-sm text-gray-400">
+<section id="about" class="border-b border-blue-100 bg-[#f7fbff] px-6 py-24 text-slate-950 lg:px-10 lg:py-32">
+  <div class="mx-auto max-w-7xl">
+    <div class="grid gap-12 lg:grid-cols-[.45fr_1fr] lg:gap-24">
       <div>
-        <span class="text-gray-500 block">Email</span>
-        <a href="mailto:pham.sonalain@gmail.com" class="text-indigo-400 hover:text-indigo-300">
-          pham.sonalain@gmail.com
-        </a>
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.label}</p>
+        <h2 class="mt-5 text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{copy.title}</h2>
       </div>
       <div>
-        <span class="text-gray-500 block">Localisation</span>
-        <span>Paris, France</span>
-      </div>
-      <div>
-        <span class="text-gray-500 block">Formation</span>
-        <span>ESIEE Paris — Data Science & IA</span>
-      </div>
-      <div>
-        <span class="text-gray-500 block">Disponibilité</span>
-        <span class="text-green-400">Septembre 2026</span>
+        <p class="max-w-3xl text-xl leading-relaxed text-slate-700 sm:text-2xl">
+          {copy.intro}
+        </p>
+        <p class="mt-6 max-w-3xl leading-relaxed text-slate-600">
+          {copy.detail}
+        </p>
+
+        <div class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-blue-100 bg-blue-100 sm:grid-cols-3">
+          {copy.principles.map(([title, description]) => (
+            <div class="bg-white p-6">
+              <p class="font-semibold text-slate-950">{title}</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-500">{description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>

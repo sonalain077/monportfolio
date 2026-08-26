@@ -1,27 +1,30 @@
 ---
-// Source : cv.md — section Expériences professionnelles et stages
+interface Props { lang?: 'fr' | 'en'; }
+const { lang = 'fr' } = Astro.props;
+const isEn = lang === 'en';
 
-const experiences = [
+const experiencesFr = [
   {
-    role: 'Ingénieur IA — Automatisation & analyse des réseaux optiques',
+    role: 'Ingénieur IA, automatisation et analyse des réseaux optiques',
     company: 'Orange Innovation',
     type: 'Stage de fin d\'étude',
-    period: '02/2026 – Présent',
+    period: '02/2026 à aujourd’hui',
+    link: '', linkLabel: '',
     bullets: [
-      'Conception et développement d\'une architecture d\'agents IA via LangGraph permettant aux techniciens d\'interroger en langage naturel les données de topologie des réseaux optiques d\'Orange.',
-      'Développement de serveurs MCP en Python pour interfacer directement les capacités de raisonnement du LLM avec les bases d\'inventaire et de topologie réseau.',
-      'Utilisation d\'API GraphQL pour requêter, structurer et formater efficacement les données du réseau PostgreSQL.',
-      'Préparation de l\'industrialisation de la solution au sein d\'un environnement GitOps/DevOps avec des pipelines CI/CD.',
+      'Conception d’un assistant composé de plusieurs agents IA pour analyser et simuler un réseau optique longue distance à partir d’une question en langage naturel.',
+      'Connexion de l’IA aux cartes du réseau, aux équipements disponibles et aux services actifs grâce à une interface de données (GraphQL), une base PostgreSQL et des outils Python.',
+      'Validation de bout en bout, de la question utilisateur à la génération d’un rapport détaillant le chemin, la capacité, les équipements et la qualité du signal.',
     ],
   },
   {
-    role: 'Conception d\'un pipeline d\'analyse thématique avec l\'IA agentique',
+    role: 'Automatisation de l’analyse d’entretiens par des agents IA',
     company: 'Laboratoire Lisis',
     type: 'Stage de recherche',
-    period: '05/2025 – 08/2025',
+    period: '05/2025 à 08/2025',
+    link: 'https://github.com/sonalain077/SocialAnalyzer', linkLabel: 'Voir le projet sur GitHub',
     bullets: [
-      'Étude comparative des biais sociologiques et des comportements de 5 modèles de LLM (LLaMA, GPT) face à des problématiques d\'ordre humain et sociétal.',
-      'Conception d\'une architecture multi-agents LangGraph automatisant la méthode d\'analyse thématique de Braun and Clarke pour traiter un corpus d\'une trentaine d\'entretiens via l\'API Groq.',
+      'Comparaison des biais et des comportements de cinq modèles de langage, dont LLaMA et GPT, face à des problématiques humaines et sociétales.',
+      'Création d’un processus où plusieurs agents IA analysent automatiquement une trentaine d’entretiens selon une méthode de recherche reconnue, avec LangGraph et l’API Groq.',
       'Intégration de mécanismes de validation et de cohérence inter-agents pour garantir la fiabilité du codage thématique.',
     ],
   },
@@ -29,7 +32,8 @@ const experiences = [
     role: 'Chef de projet commercial',
     company: 'Junior ESIEE',
     type: '',
-    period: '01/2025 – 02/2026',
+    period: '01/2025 à 02/2026',
+    link: 'https://junioresiee.com/', linkLabel: 'Découvrir Junior ESIEE',
     bullets: [
       'Pilotage de plus de 5 missions clients de bout en bout sur des sujets tech, de l\'analyse du besoin à la livraison finale.',
       'Gestion de budgets allant de 1 000 € à 20 000 € selon la complexité des missions.',
@@ -37,30 +41,70 @@ const experiences = [
     ],
   },
 ];
+
+const experiencesEn = [
+  {
+    role: 'AI Engineer for optical network management', company: 'Orange Innovation', type: 'Final-year internship', period: '02/2026 to present', link: '', linkLabel: '',
+    bullets: [
+      'Designed a multi-agent assistant to analyze and simulate a long-haul optical network from questions written in natural language.',
+      'Connected the AI system to network maps, available equipment and active services through GraphQL, PostgreSQL and Python tools.',
+      'Validated the full workflow, from the user’s question to a report detailing the route, capacity, equipment and signal quality.',
+    ],
+  },
+  {
+    role: 'Agentic AI pipeline for thematic interview analysis', company: 'Lisis Laboratory', type: 'Research internship', period: '05/2025 to 08/2025', link: 'https://github.com/sonalain077/SocialAnalyzer', linkLabel: 'View the project on GitHub',
+    bullets: [
+      'Compared sociological biases and behavior across five language models, including LLaMA and GPT, on human and societal topics.',
+      'Designed a LangGraph multi-agent workflow to analyze around thirty interviews using the Braun and Clarke thematic analysis method and the Groq API.',
+      'Added inter-agent validation and consistency checks to improve the reliability of thematic coding.',
+    ],
+  },
+  {
+    role: 'Business Project Manager', company: 'Junior ESIEE', type: '', period: '01/2025 to 02/2026', link: 'https://junioresiee.com/', linkLabel: 'Visit Junior ESIEE',
+    bullets: [
+      'Managed more than five client engagements on technology topics, from requirements analysis to final delivery.',
+      'Managed budgets ranging from €1,000 to €20,000 depending on project complexity.',
+      'Prepared business proposals and client presentations while coordinating teams of student consultants.',
+    ],
+  },
+];
+
+const experiences = isEn ? experiencesEn : experiencesFr;
 ---
 
-<section id="experience" class="max-w-5xl mx-auto px-6 py-24">
-  <h2 class="text-3xl font-bold mb-12 text-white">Expériences</h2>
-  <div class="space-y-12">
-    {experiences.map((exp) => (
-      <div class="grid md:grid-cols-4 gap-6">
-        <div class="text-sm text-gray-500 font-mono pt-1">
-          <p>{exp.period}</p>
-          {exp.type && <p class="text-indigo-500 mt-1">{exp.type}</p>}
-        </div>
-        <div class="md:col-span-3">
-          <h3 class="text-lg font-semibold text-white">{exp.role}</h3>
-          <p class="text-indigo-400 mb-4">{exp.company}</p>
-          <ul class="space-y-2">
-            {exp.bullets.map((b) => (
-              <li class="flex gap-3 text-gray-400 text-sm leading-relaxed">
-                <span class="text-indigo-500 mt-1 flex-shrink-0">▸</span>
-                <span>{b}</span>
+<section id="experience" class="border-b border-blue-100 bg-white px-6 py-24 text-slate-950 lg:px-10 lg:py-32">
+  <div class="mx-auto max-w-7xl">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{isEn ? 'Career' : 'Parcours'}</p>
+        <h2 class="mt-5 text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{isEn ? 'Experience' : 'Expériences'}</h2>
+      </div>
+      <p class="max-w-md text-sm leading-relaxed text-slate-500">{isEn ? 'My experience spans research, product development and client-facing work.' : 'J’ai travaillé sur des sujets de recherche, de produit et de relation client.'}</p>
+    </div>
+
+    <div class="mt-16 divide-y divide-blue-100 border-y border-blue-100">
+      {experiences.map((exp, index) => (
+        <article class="grid gap-6 py-10 lg:grid-cols-[130px_1fr_1.35fr] lg:gap-12">
+          <div class="font-mono text-xs uppercase tracking-[0.12em] text-slate-400">
+            <p>{exp.period}</p>
+            {exp.type && <p class="mt-2 font-semibold text-blue-600">{exp.type}</p>}
+            <span class="mt-5 block text-2xl text-blue-100">0{index + 1}</span>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-blue-600">{exp.company}</p>
+            <h3 class="mt-2 text-xl font-semibold leading-snug text-slate-950">{exp.role}</h3>
+            {exp.link && <a href={exp.link} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-800">{exp.linkLabel}<span>↗</span></a>}
+          </div>
+          <ul class="space-y-3">
+            {exp.bullets.map((bullet) => (
+              <li class="flex gap-3 text-sm leading-relaxed text-slate-600">
+                <span class="mt-2 h-1 w-1 flex-none rounded-full bg-cyan-500"></span>
+                <span>{bullet}</span>
               </li>
             ))}
           </ul>
-        </div>
-      </div>
-    ))}
+        </article>
+      ))}
+    </div>
   </div>
 </section>

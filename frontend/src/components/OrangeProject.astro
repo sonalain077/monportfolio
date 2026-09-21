@@ -4,17 +4,17 @@ const { lang = 'fr' } = Astro.props;
 const isEn = lang === 'en';
 
 const resultsFr = [
-  { value: '1 demande', label: 'pour passer d’une question à un rapport technique complet' },
-  { value: '< 6 s', label: 'pour obtenir une réponse exploitable' },
-  { value: '2 172', label: 'services réseau consultables en langage naturel' },
-  { value: '4 volets', label: 'chemin, capacité, équipements et qualité du signal' },
+  { value: '2 172', title: 'services réseau', label: 'accessibles par les agents via des outils contrôlés' },
+  { value: '< 6 s', title: 'de latence médiane', label: 'mesurée dans l’environnement de démonstration' },
+  { value: '4 analyses', title: 'réunies dans une même étude', label: 'chemin, capacité, équipements et qualité du signal' },
+  { value: '1 rapport', title: 'prêt à être vérifié', label: 'avec la décision, les données utilisées et les résultats de simulation' },
 ];
 
 const resultsEn = [
-  { value: '1 request', label: 'to go from a question to a complete technical report' },
-  { value: '< 6 s', label: 'to produce an actionable answer' },
-  { value: '2,172', label: 'network services accessible in natural language' },
-  { value: '4 sections', label: 'route, capacity, equipment and signal quality' },
+  { value: '2,172', title: 'network services', label: 'accessible through controlled agent tools' },
+  { value: '< 6 s', title: 'median latency', label: 'measured in the demonstration environment' },
+  { value: '4 analyses', title: 'combined in one study', label: 'route, capacity, equipment and signal quality' },
+  { value: '1 report', title: 'ready for review', label: 'including the decision, supporting data and simulation results' },
 ];
 
 const demosFr = [
@@ -22,6 +22,7 @@ const demosFr = [
     title: 'Explorer la topologie',
     label: 'Cartographie réseau',
     description: 'Visualisation interactive des liaisons, filtrage par zone et lecture de la capacité encore disponible sur chaque liaison.',
+    observe: 'À observer : la carte rend visibles les chemins possibles et la capacité disponible avant toute analyse.',
     video: '/media/topology-map.mp4',
     poster: '/media/topology-map.webp',
     playbackRate: 1,
@@ -30,6 +31,7 @@ const demosFr = [
     title: 'Interroger le réseau',
     label: 'Assistant IA',
     description: 'Une question métier en langage naturel est routée vers les agents et les sources appropriées.',
+    observe: 'À observer : la question est comprise, puis confiée aux outils et aux données adaptés.',
     video: '/media/andiamo-question.mp4',
     poster: '/media/andiamo-question.webp',
     playbackRate: 1,
@@ -38,6 +40,7 @@ const demosFr = [
     title: 'Étudier une faisabilité',
     label: 'Parcours complet',
     description: 'Choix du chemin, sélection des équipements, simulation de la qualité du signal puis génération d’un rapport de décision.',
+    observe: 'À observer : les quatre analyses sont réunies dans un rapport qui justifie la décision finale.',
     video: '/media/feasibility.mp4',
     poster: '/media/feasibility.webp',
     playbackRate: 1.35,
@@ -45,29 +48,82 @@ const demosFr = [
 ];
 
 const demosEn = [
-  { title: 'Explore the topology', label: 'Network map', description: 'Interactive view of the links, regional filters and remaining capacity on each connection.', video: '/media/topology-map.mp4', poster: '/media/topology-map.webp', playbackRate: 1 },
-  { title: 'Query the network', label: 'AI assistant', description: 'A business question written in natural language is routed to the right agents and data sources.', video: '/media/andiamo-question.mp4', poster: '/media/andiamo-question.webp', playbackRate: 1 },
-  { title: 'Run a feasibility study', label: 'End-to-end workflow', description: 'Route selection, equipment choice, signal-quality simulation and generation of a decision report.', video: '/media/feasibility.mp4', poster: '/media/feasibility.webp', playbackRate: 1.35 },
+  { title: 'Explore the topology', label: 'Network map', description: 'Interactive view of the links, regional filters and remaining capacity on each connection.', observe: 'What to notice: the map exposes possible routes and available capacity before the analysis starts.', video: '/media/topology-map.mp4', poster: '/media/topology-map.webp', playbackRate: 1 },
+  { title: 'Query the network', label: 'AI assistant', description: 'A business question written in natural language is routed to the right agents and data sources.', observe: 'What to notice: the question is interpreted, then assigned to the appropriate data and engineering tools.', video: '/media/andiamo-question.mp4', poster: '/media/andiamo-question.webp', playbackRate: 1 },
+  { title: 'Run a feasibility study', label: 'End-to-end workflow', description: 'Route selection, equipment choice, signal-quality simulation and generation of a decision report.', observe: 'What to notice: all four analyses are combined in a report that supports the final decision.', video: '/media/feasibility.mp4', poster: '/media/feasibility.webp', playbackRate: 1.35 },
+];
+
+const contributionsFr = [
+  'Conception de l’architecture multi-agents et du workflow d’orchestration avec LangGraph.',
+  'Développement du serveur MCP reliant les agents à GraphQL, PostgreSQL et aux outils d’ingénierie Python.',
+  'Intégration du calcul de chemin, de l’analyse de capacité, du contrôle des équipements et de la simulation optique GNPy.',
+  'Mise en place de sorties structurées, de la validation, de la traçabilité et des contrôles de qualité des réponses.',
+  'Développement de l’interface de démonstration et du processus automatisé de génération des rapports.',
+];
+
+const contributionsEn = [
+  'Designed the multi-agent architecture and orchestration workflow with LangGraph.',
+  'Built the MCP server connecting the agents to GraphQL, PostgreSQL and Python engineering tools.',
+  'Integrated route calculation, capacity analysis, equipment checks and GNPy signal simulation.',
+  'Implemented structured outputs, validation, traceability and response-quality controls.',
+  'Built the demonstration interface and automated report-generation workflow.',
+];
+
+const reliabilityFr = [
+  { title: 'Accès contrôlé aux données', text: 'Les agents accèdent uniquement aux outils et aux sources de données approuvés.' },
+  { title: 'Calculs déterministes', text: 'Les calculs d’ingénierie sont confiés à des outils Python spécialisés et à GNPy.' },
+  { title: 'Résultats traçables', text: 'Le rapport expose le chemin, la capacité, les équipements et les simulations qui justifient la décision.' },
+];
+
+const reliabilityEn = [
+  { title: 'Controlled data access', text: 'Agents can only access approved tools and data sources.' },
+  { title: 'Deterministic calculations', text: 'Engineering calculations are delegated to specialized Python tools and GNPy.' },
+  { title: 'Traceable outputs', text: 'The final report exposes the route, capacity, equipment and simulation results supporting the decision.' },
+];
+
+const decisionsFr = [
+  { title: 'Pourquoi LangGraph ?', text: 'J’ai d’abord testé n8n, puis retenu LangGraph pour sa gestion plus modulaire de l’état des agents, son routage conditionnel et la possibilité d’ajouter une logique de validation sur mesure.' },
+  { title: 'Pourquoi MCP ?', text: 'MCP fournit une interface cohérente entre les agents et des outils hétérogènes comme les bases de données, les API et le logiciel de simulation.' },
+  { title: 'Quelle a été la principale difficulté ?', text: 'Le principal défi n’était pas de générer du texte, mais de fournir aux agents des données opérationnelles fiables et à jour, puis de garantir que chaque résultat reste techniquement vérifiable.' },
+];
+
+const decisionsEn = [
+  { title: 'Why LangGraph?', text: 'I first tested n8n, then selected LangGraph because the project required more modular agent state management, conditional routing and custom validation logic.' },
+  { title: 'Why MCP?', text: 'MCP provided a consistent interface between the agents and heterogeneous tools such as databases, APIs and simulation software.' },
+  { title: 'What was hardest?', text: 'The main challenge was not generating text, but providing agents with reliable, up-to-date operational data and ensuring that every result remained technically verifiable.' },
 ];
 
 const results = isEn ? resultsEn : resultsFr;
 const demos = isEn ? demosEn : demosFr;
+const contributions = isEn ? contributionsEn : contributionsFr;
+const reliability = isEn ? reliabilityEn : reliabilityFr;
+const decisions = isEn ? decisionsEn : decisionsFr;
+const reportHref = isEn ? '/media/feasibility-report-en.html' : '/media/feasibility-report.html';
+const alternateReportHref = isEn ? '/media/feasibility-report.html' : '/media/feasibility-report-en.html';
 const copy = isEn ? {
-  eyebrow: 'Case study at Orange Innovation', intro: 'A conversational AI assistant for operating and planning a long-haul optical network, the infrastructure that carries data between cities and countries.',
-  problem: 'The problem', problemText: 'Checking whether a new connection was feasible required several tools: finding the best route, checking available capacity, simulating the signal and verifying equipment. The analysis could take several hours.',
-  solution: 'The solution', solutionText: 'A LangGraph orchestration engine coordinates several specialized AI agents. They query network data, calculate routes and use GNPy, software that simulates optical signal quality, before producing a shareable report.',
-  demos: 'Demos', demosTitle: 'A few examples on video.', demosText: 'Short extracts from a demonstration environment. All visible data has been anonymized.',
-  report: 'Generated report', reportTitle: 'The final decision, presented in a document teams can use.', reportText: 'The report brings together the selected route, available capacity, required equipment and the signal-quality simulation.', reportCta: 'Open the full report', reportFrame: 'Preview of the feasibility report generated by Andiamo Agent',
-  architectureTitle: 'How it works.', architectureText: 'The router selects the appropriate agent. Each agent has its own tools and data sources. A quality judge checks the response before it is returned.', flow: 'From a business request to a verified result',
-  question: 'Business question', questionText: 'Written naturally by the user', agents: 'Agents and tools', network: 'Network data', route: 'Route calculation', simulation: 'GNPy simulation', answer: 'Verified response', answerText: 'Clear decision and detailed report',
+  eyebrow: 'Case study at Orange Innovation', intro: 'I built an AI assistant that turns a network engineer’s question into a verified feasibility report by querying network data, calculating possible routes, checking available equipment and simulating signal quality.',
+  problem: 'The problem', problemText: 'Before this project, determining whether a new optical connection was feasible required engineers to move between several tools and data sources. They had to identify a possible route, verify network capacity and equipment availability, run a signal-quality simulation and manually combine the results into a decision report.',
+  solution: 'The solution', solutionText: 'I designed and developed an agentic system that coordinates these steps automatically. Specialized agents access network data through controlled tools, perform the required calculations and simulations, verify the consistency of the results and generate a report that engineers can review and share.',
+  contribution: 'My contribution', contributionText: 'The parts of the system I personally designed and implemented.',
+  context: 'Project context', contextText: 'Developed during my final-year internship at Orange Innovation. The demonstrations use anonymized data. The source code and internal datasets remain the property of Orange; the architecture, workflows and generated outputs shown here use material prepared to respect the project’s confidentiality requirements.',
+  demos: 'Demos', demosTitle: 'See the workflow in action.', demosText: 'Short extracts from an internal engineering prototype. All visible data has been anonymized.',
+  report: 'Generated report', reportTitle: 'The final decision, with the evidence needed to review it.', reportText: 'The English report summarizes the selected route, available capacity, required equipment and signal-quality simulation. The original detailed report remains available in French.', reportCta: 'Open the English report', reportOriginalCta: 'View the original French report', reportFrame: 'English feasibility report generated by Andiamo Agent',
+  architectureTitle: 'How it works.', architectureText: 'A router selects the appropriate specialized agent. Each agent can call only the tools it needs. Deterministic engineering software performs the calculations, and validation steps check the result before a report is generated.', flow: 'From a business question to a verified decision',
+  question: 'Business question', questionText: 'Written naturally by the user', agents: 'Agents and tools', network: 'Network data', route: 'Route calculation', simulation: 'GNPy simulation', answer: 'Verified response', answerText: 'Clear decision and supporting report',
+  reliability: 'Reliability by design', reliabilityText: 'The LLM does not calculate network feasibility by itself. It selects and coordinates deterministic engineering tools. Route calculations, database queries and signal simulations remain handled by specialized software, while validation steps check that the final answer is complete and consistent before it is returned.',
+  decisions: 'Key engineering decisions', decisionsText: 'The main technical choices and the problem that required the most care.',
 } : {
-  eyebrow: 'Étude de cas chez Orange Innovation', intro: 'Un assistant IA conversationnel pour exploiter et planifier un réseau optique longue distance, celui qui transporte les données entre plusieurs villes ou pays.',
-  problem: 'Le problème', problemText: 'Vérifier qu’une nouvelle liaison était réalisable nécessitait plusieurs outils : recherche du meilleur chemin, contrôle de la capacité disponible, simulation du signal et vérification des équipements. L’analyse pouvait prendre plusieurs heures.',
-  solution: 'La solution', solutionText: 'Un moteur d’orchestration (LangGraph) coordonne plusieurs agents IA spécialisés. Ils consultent les données du réseau, calculent les chemins et utilisent GNPy, un logiciel qui simule la qualité du signal optique, avant de produire un rapport partageable.',
-  demos: 'Démonstrations', demosTitle: 'Quelques exemples en vidéo.', demosText: 'Extraits courts d’un environnement de démonstration. Toutes les données visibles sont anonymisées.',
-  report: 'Rapport généré', reportTitle: 'La décision finale, présentée dans un document exploitable.', reportText: 'Le rapport rassemble le chemin retenu, la capacité disponible, les équipements nécessaires et la simulation de la qualité du signal.', reportCta: 'Ouvrir le rapport complet', reportFrame: 'Aperçu du rapport de faisabilité généré par Andiamo Agent',
-  architectureTitle: 'Comment ça fonctionne.', architectureText: 'Le routeur choisit l’agent compétent. Chaque agent dispose de ses propres outils et sources de données. Un juge de qualité vérifie ensuite la réponse avant restitution.', flow: 'Du besoin exprimé au résultat vérifié',
-  question: 'Question métier', questionText: 'Formulée simplement par l’utilisateur', agents: 'Agents et outils', network: 'Données réseau', route: 'Calcul du chemin', simulation: 'Simulation GNPy', answer: 'Réponse vérifiée', answerText: 'Décision claire et rapport détaillé',
+  eyebrow: 'Étude de cas chez Orange Innovation', intro: 'J’ai développé un assistant IA qui transforme la question d’un ingénieur réseau en rapport de faisabilité vérifié : il consulte les données du réseau, calcule les chemins possibles, contrôle les équipements disponibles et simule la qualité du signal.',
+  problem: 'Le problème', problemText: 'Avant ce projet, déterminer si une nouvelle liaison optique était réalisable obligeait les ingénieurs à passer d’un outil et d’une source de données à l’autre. Ils devaient identifier un chemin possible, vérifier la capacité du réseau et les équipements disponibles, lancer une simulation de qualité du signal, puis réunir manuellement les résultats dans un rapport de décision.',
+  solution: 'La solution', solutionText: 'J’ai conçu et développé un système agentique qui coordonne automatiquement ces étapes. Des agents spécialisés accèdent aux données réseau au moyen d’outils contrôlés, exécutent les calculs et les simulations nécessaires, vérifient la cohérence des résultats et génèrent un rapport que les ingénieurs peuvent relire et partager.',
+  contribution: 'Ma contribution', contributionText: 'Les éléments du système que j’ai personnellement conçus et développés.',
+  context: 'Contexte du projet', contextText: 'Projet développé pendant mon stage de fin d’études chez Orange Innovation. Les démonstrations utilisent des données anonymisées. Le code source et les jeux de données internes restent la propriété d’Orange ; l’architecture, les workflows et les résultats présentés ici utilisent des supports préparés dans le respect des exigences de confidentialité du projet.',
+  demos: 'Démonstrations', demosTitle: 'Voir le parcours en action.', demosText: 'Extraits courts d’un prototype d’ingénierie interne. Toutes les données visibles sont anonymisées.',
+  report: 'Rapport généré', reportTitle: 'La décision finale, accompagnée des éléments nécessaires pour la vérifier.', reportText: 'Le rapport rassemble le chemin retenu, la capacité disponible, les équipements nécessaires et la simulation de la qualité du signal.', reportCta: 'Ouvrir le rapport français', reportOriginalCta: 'Voir la synthèse anglaise', reportFrame: 'Rapport français de faisabilité généré par Andiamo Agent',
+  architectureTitle: 'Comment ça fonctionne.', architectureText: 'Un routeur sélectionne l’agent spécialisé adapté. Chaque agent ne peut appeler que les outils dont il a besoin. Les calculs sont exécutés par des logiciels d’ingénierie déterministes, puis des étapes de validation contrôlent le résultat avant la génération du rapport.', flow: 'De la question métier à la décision vérifiée',
+  question: 'Question métier', questionText: 'Formulée simplement par l’utilisateur', agents: 'Agents et outils', network: 'Données réseau', route: 'Calcul du chemin', simulation: 'Simulation GNPy', answer: 'Réponse vérifiée', answerText: 'Décision claire et rapport justificatif',
+  reliability: 'Fiabilité dès la conception', reliabilityText: 'Le modèle de langage ne calcule pas lui-même la faisabilité du réseau. Il sélectionne et coordonne des outils d’ingénierie déterministes. Les calculs de chemin, les requêtes en base et les simulations du signal restent exécutés par des logiciels spécialisés. Des étapes de validation vérifient ensuite que la réponse finale est complète et cohérente.',
+  decisions: 'Choix techniques clés', decisionsText: 'Les principales décisions d’architecture et la difficulté qui a demandé le plus de rigueur.',
 };
 ---
 
@@ -80,6 +136,10 @@ const copy = isEn ? {
         <p class="mt-5 text-lg leading-relaxed text-slate-600">
           {copy.intro}
         </p>
+        <aside class="mt-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
+          <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.context}</p>
+          <p class="mt-3 text-sm leading-relaxed text-slate-600">{copy.contextText}</p>
+        </aside>
       </div>
 
       <div class="grid gap-8 sm:grid-cols-2">
@@ -98,11 +158,27 @@ const copy = isEn ? {
       </div>
     </div>
 
+    <div class="mt-16 grid gap-8 rounded-3xl border border-blue-100 bg-[#f8fbff] p-7 sm:p-9 lg:grid-cols-[.62fr_1.38fr] lg:gap-14">
+      <div>
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.contribution}</p>
+        <h3 class="mt-4 text-2xl font-semibold tracking-tight text-slate-950">{copy.contributionText}</h3>
+      </div>
+      <ol class="grid gap-3 sm:grid-cols-2">
+        {contributions.map((item, index) => (
+          <li class="flex gap-4 rounded-2xl border border-blue-100 bg-white p-5 text-sm leading-relaxed text-slate-600">
+            <span class="font-mono text-xs font-semibold text-blue-500">0{index + 1}</span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+
     <div class="mt-16 grid gap-px overflow-hidden rounded-2xl border border-blue-100 bg-blue-100 sm:grid-cols-2 lg:grid-cols-4">
       {results.map((result) => (
         <div class="bg-white p-6 sm:p-7">
           <p class="text-3xl font-semibold tracking-tight text-slate-950">{result.value}</p>
-          <p class="mt-2 text-sm leading-relaxed text-slate-500">{result.label}</p>
+          <p class="mt-2 text-sm font-semibold text-slate-700">{result.title}</p>
+          <p class="mt-1 text-sm leading-relaxed text-slate-500">{result.label}</p>
         </div>
       ))}
     </div>
@@ -140,37 +216,12 @@ const copy = isEn ? {
             <div class="p-6">
               <h4 class="text-lg font-semibold text-slate-950">{demo.title}</h4>
               <p class="mt-2 text-sm leading-relaxed text-slate-500">{demo.description}</p>
+              <p class="mt-4 border-l-2 border-cyan-400 pl-3 text-xs leading-relaxed text-slate-600">{demo.observe}</p>
             </div>
           </article>
         ))}
       </div>
 
-      <article class="mt-14 overflow-hidden rounded-3xl border border-blue-100 bg-[#f8fbff] shadow-xl shadow-blue-900/5">
-        <div class="flex flex-col gap-6 border-b border-blue-100 p-7 sm:flex-row sm:items-end sm:justify-between sm:p-9">
-          <div>
-            <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.report}</p>
-            <h4 class="mt-3 max-w-2xl text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">{copy.reportTitle}</h4>
-            <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600">
-              {copy.reportText}
-            </p>
-          </div>
-          <a href="/media/feasibility-report.html" target="_blank" rel="noopener noreferrer" class="inline-flex flex-none items-center justify-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
-            {copy.reportCta} <span>↗</span>
-          </a>
-        </div>
-        <div class="bg-slate-200 p-3 sm:p-5">
-          <div class="overflow-hidden rounded-2xl border border-slate-300 bg-white shadow-inner">
-            <iframe
-              src="/media/feasibility-report.html"
-              title={copy.reportFrame}
-              class="h-[620px] w-full bg-white"
-              loading="lazy"
-              sandbox="allow-scripts"
-              referrerpolicy="no-referrer"
-            ></iframe>
-          </div>
-        </div>
-      </article>
     </div>
 
     <div class="mt-24 grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
@@ -208,6 +259,70 @@ const copy = isEn ? {
         </div>
       </div>
     </div>
+
+    <section class="mt-24 rounded-3xl bg-slate-950 p-7 text-white sm:p-10">
+      <div class="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:gap-16">
+        <div>
+          <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">{copy.reliability}</p>
+          <h3 class="mt-4 text-3xl font-semibold tracking-[-0.03em]">{isEn ? 'The model coordinates. Engineering tools decide.' : 'Le modèle coordonne. Les outils d’ingénierie calculent.'}</h3>
+          <p class="mt-5 leading-relaxed text-slate-300">{copy.reliabilityText}</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-3">
+          {reliability.map((item, index) => (
+            <article class="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <span class="font-mono text-xs text-cyan-300">0{index + 1}</span>
+              <h4 class="mt-4 font-semibold text-white">{item.title}</h4>
+              <p class="mt-2 text-sm leading-relaxed text-slate-300">{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-24">
+      <div class="max-w-3xl">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.decisions}</p>
+        <h3 class="mt-4 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{copy.decisionsText}</h3>
+      </div>
+      <div class="mt-10 grid gap-5 lg:grid-cols-3">
+        {decisions.map((item) => (
+          <article class="rounded-2xl border border-blue-100 bg-[#f8fbff] p-6 sm:p-7">
+            <h4 class="text-lg font-semibold text-slate-950">{item.title}</h4>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600">{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <article class="mt-24 overflow-hidden rounded-3xl border border-blue-100 bg-[#f8fbff] shadow-xl shadow-blue-900/5">
+      <div class="flex flex-col gap-7 border-b border-blue-100 p-7 lg:flex-row lg:items-end lg:justify-between sm:p-9">
+        <div>
+          <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.report}</p>
+          <h3 class="mt-3 max-w-2xl text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">{copy.reportTitle}</h3>
+          <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600">{copy.reportText}</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href={reportHref} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
+            {copy.reportCta} <span>↗</span>
+          </a>
+          <a href={alternateReportHref} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-full border border-blue-200 bg-white px-5 py-3 text-sm font-semibold text-blue-700 transition hover:border-blue-400">
+            {copy.reportOriginalCta}
+          </a>
+        </div>
+      </div>
+      <div class="bg-slate-200 p-3 sm:p-5">
+        <div class="overflow-hidden rounded-2xl border border-slate-300 bg-white shadow-inner">
+          <iframe
+            src={reportHref}
+            title={copy.reportFrame}
+            class="h-[620px] w-full bg-white"
+            loading="lazy"
+            sandbox="allow-scripts"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 

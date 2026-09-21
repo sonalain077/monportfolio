@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Optical connection feasibility report</title>
+    <style>
+      :root {
+        --ink: #0f172a;
+        --muted: #64748b;
+        --line: #dbe5f0;
+        --surface: #ffffff;
+        --canvas: #eef4fa;
+        --blue: #2563eb;
+        --blue-soft: #eff6ff;
+        --cyan: #0891b2;
+        --green: #15803d;
+        --green-soft: #ecfdf3;
+        --amber-soft: #fff7ed;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        line-height: 1.55;
+      }
+
+      main {
+        width: min(1180px, calc(100% - 32px));
+        margin: 28px auto 56px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 16px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .language-link {
+        color: var(--blue);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .card {
+        margin-bottom: 16px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      }
+
+      .hero {
+        padding: 30px;
+        background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1, h2, h3, p { margin-top: 0; }
+      h1 { margin-bottom: 8px; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -0.03em; }
+      h2 { margin-bottom: 16px; font-size: 21px; letter-spacing: -0.01em; }
+      h3 { margin-bottom: 8px; font-size: 16px; }
+      p:last-child { margin-bottom: 0; }
+
+      .meta { color: var(--muted); font-size: 14px; }
+      .notice { margin-top: 18px; padding: 12px 14px; border-left: 3px solid var(--cyan); background: #ecfeff; color: #155e75; font-size: 13px; }
+
+      .decision {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: minmax(0, 1.6fr) minmax(220px, 0.8fr);
+        align-items: center;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 13px;
+        border-radius: 999px;
+        background: var(--green-soft);
+        color: var(--green);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .status::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: #22c55e; }
+      .route { margin: 16px 0 0; color: #334155; font-size: 15px; }
+      .route strong { color: var(--ink); }
+
+      .margin-box {
+        padding: 20px;
+        border: 1px solid #bbf7d0;
+        border-radius: 14px;
+        background: var(--green-soft);
+        text-align: center;
+      }
+
+      .margin-value { display: block; color: var(--green); font-size: 34px; font-weight: 800; letter-spacing: -0.03em; }
+      .margin-label { color: #166534; font-size: 13px; }
+
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .kpi { padding: 15px; border-radius: 12px; background: #f8fafc; }
+      .kpi strong { display: block; font-size: 21px; line-height: 1.2; }
+      .kpi span { color: var(--muted); font-size: 12px; }
+
+      .analysis-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .analysis {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fbfdff;
+      }
+
+      .number { color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: 0.12em; }
+      .analysis p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+
+      .path {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        align-items: center;
+      }
+
+      .node { position: relative; padding: 15px 12px; border: 1px solid #bfdbfe; border-radius: 12px; background: var(--blue-soft); text-align: center; font-size: 13px; font-weight: 700; }
+      .node:not(:last-child)::after { content: "→"; position: absolute; top: 50%; right: -13px; transform: translateY(-50%); color: #60a5fa; font-size: 18px; z-index: 2; }
+
+      .spectrum { margin-top: 18px; }
+      .spectrum-bar { display: grid; grid-template-columns: 24% 10% 50% 16%; height: 24px; overflow: hidden; border-radius: 7px; }
+      .occupied { background: #fecaca; }
+      .selected { background: var(--blue); }
+      .free { background: #bbf7d0; }
+      .guard { background: #cbd5e1; }
+      .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; color: var(--muted); font-size: 12px; }
+      .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; border-radius: 2px; }
+
+      table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      th { padding: 10px; background: #f1f5f9; color: #475569; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+      td { padding: 11px 10px; border-bottom: 1px solid #e2e8f0; }
+      tr:last-child td { border-bottom: 0; }
+      .pass { color: var(--green); font-weight: 700; }
+
+      .footer-note { color: var(--muted); font-size: 12px; text-align: center; }
+
+      @media (max-width: 760px) {
+        main { width: min(100% - 18px, 1180px); margin-top: 10px; }
+        .card, .hero { padding: 19px; border-radius: 12px; }
+        .decision, .analysis-grid { grid-template-columns: 1fr; }
+        .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .path { grid-template-columns: 1fr; }
+        .node:not(:last-child)::after { content: "↓"; top: auto; right: 50%; bottom: -18px; transform: translateX(50%); }
+        .table-wrap { overflow-x: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="topbar">
+        <span>Andiamo Agent · Demonstration environment</span>
+        <a class="language-link" href="feasibility-report.html">View original report in French</a>
+      </div>
+
+      <header class="card hero">
+        <p class="eyebrow">Optical engineering decision report</p>
+        <h1>Connection feasibility analysis</h1>
+        <p class="meta">BALI_CDM_126 → BADVEL_MTUI_148 · Requested capacity: 100 Gbit/s · Generated from anonymized demonstration data</p>
+        <p class="notice">English portfolio edition. This document presents the decision and the main supporting evidence from the original generated report in a format accessible to non-specialist readers.</p>
+      </header>
+
+      <section class="card decision">
+        <div>
+          <span class="status">Feasible</span>
+          <p class="route"><strong>Selected route:</strong> BALI_CDM_126 → ABAY_CK_547 → ABAY_KRA_315_G → BADVEL_MTUI_148</p>
+          <p class="meta">The route has sufficient spectrum and compatible equipment. The simulated signal remains above the required quality threshold in both directions.</p>
+        </div>
+        <div class="margin-box">
+          <span class="margin-value">+13.8 dB</span>
+          <span class="margin-label">minimum signal-quality margin</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Decision at a glance</h2>
+        <div class="kpis">
+          <div class="kpi"><strong>4</strong><span>network nodes</span></div>
+          <div class="kpi"><strong>3</strong><span>optical segments</span></div>
+          <div class="kpi"><strong>150 km</strong><span>route distance</span></div>
+          <div class="kpi"><strong>29</strong><span>common free slots</span></div>
+          <div class="kpi"><strong>PM-QPSK</strong><span>selected modulation</span></div>
+          <div class="kpi"><strong>25.98 dB</strong><span>estimated OSNR</span></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Four engineering checks combined</h2>
+        <div class="analysis-grid">
+          <article class="analysis">
+            <span class="number">01 · ROUTE</span>
+            <h3>A valid path was found</h3>
+            <p>The calculated route connects the requested endpoints through four network nodes and three optical segments.</p>
+          </article>
+          <article class="analysis">
+            <span class="number">02 · CAPACITY</span>
+            <h3>Continuous spectrum is available</h3>
+            <p>The same optical slot is free across every segment, satisfying the continuity constraint for the new service.</p>
+          </article>
+          <article class="analysis">
+            <span class="number">03 · EQUIPMENT</span>
+            <h3>Compatible hardware is available</h3>
+            <p>The equipment inventory contains compatible transponders and usable line ports along the selected route.</p>
+          </article>
+          <article class="analysis">
+            <span class="number">04 · SIGNAL QUALITY</span>
+            <h3>The simulated signal passes</h3>
+            <p>GNPy estimates enough optical signal-to-noise margin for the selected transceiver and modulation format.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Selected route</h2>
+        <div class="path">
+          <div class="node">BALI_CDM_126</div>
+          <div class="node">ABAY_CK_547</div>
+          <div class="node">ABAY_KRA_315_G</div>
+          <div class="node">BADVEL_MTUI_148</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Spectrum and capacity</h2>
+        <p class="meta">A wavelength service must use the same slot across all three optical segments. The highlighted block represents the proposed new 50 GHz service at 191.300 THz.</p>
+        <div class="spectrum">
+          <div class="spectrum-bar" aria-label="Simplified spectrum availability view">
+            <div class="occupied"></div>
+            <div class="selected"></div>
+            <div class="free"></div>
+            <div class="guard"></div>
+          </div>
+          <div class="legend">
+            <span><i style="background:#fecaca"></i>Occupied spectrum</span>
+            <span><i style="background:#2563eb"></i>Proposed service</span>
+            <span><i style="background:#bbf7d0"></i>Available spectrum</span>
+            <span><i style="background:#cbd5e1"></i>Guard band</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Equipment availability</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Inventory check</th><th>Result</th><th>Interpretation</th></tr></thead>
+            <tbody>
+              <tr><td>Installed pluggables without an active optical channel</td><td>6</td><td class="pass">Available</td></tr>
+              <tr><td>Empty compatible line slots</td><td>2</td><td class="pass">Available</td></tr>
+              <tr><td>Active pluggables identified</td><td>6</td><td>Included in capacity checks</td></tr>
+              <tr><td>Integrated cards identified</td><td>38</td><td>Included in inventory evidence</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Signal-quality simulation</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Direction</th><th>Simulated OSNR</th><th>Required OSNR</th><th>Margin</th><th>Decision</th></tr></thead>
+            <tbody>
+              <tr><td>BALI_CDM → BADVEL_MTUI</td><td>25.98 dB</td><td>14.2 dB</td><td>+13.8 dB</td><td class="pass">Pass</td></tr>
+              <tr><td>BADVEL_MTUI → BALI_CDM</td><td>26.27 dB</td><td>14.2 dB</td><td>+14.1 dB</td><td class="pass">Pass</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="notice">GNPy performs the optical propagation simulation. The language model coordinates the workflow but does not invent or calculate the engineering result.</p>
+      </section>
+
+      <section class="card">
+        <h2>Recommended configuration</h2>
+        <div class="kpis">
+          <div class="kpi"><strong>nokia_130SCUPC</strong><span>transceiver</span></div>
+          <div class="kpi"><strong>PM-QPSK</strong><span>modulation format</span></div>
+          <div class="kpi"><strong>SD-FEC</strong><span>error correction</span></div>
+          <div class="kpi"><strong>50.0 GHz</strong><span>channel spacing</span></div>
+          <div class="kpi"><strong>32.32 GBd</strong><span>baud rate</span></div>
+          <div class="kpi"><strong>100 Gbit/s</strong><span>requested capacity</span></div>
+        </div>
+      </section>
+
+      <p class="footer-note">Anonymized demonstration output · Source code and internal datasets remain the property of Orange.</p>
+    </main>
+  </body>
+</html>

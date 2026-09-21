@@ -54,19 +54,17 @@ const demosEn = [
 ];
 
 const contributionsFr = [
-  'Conception du routeur conversationnel, de l’architecture multi-agents et du workflow d’orchestration avec LangGraph.',
-  'Développement du serveur MCP reliant les agents à GraphQL, PostgreSQL et aux outils d’ingénierie Python.',
-  'Connexion des questions métier aux données de topologie, d’inventaire et de services, puis intégration du calcul de chemin, de l’analyse de capacité, du contrôle des équipements et de la simulation GNPy.',
-  'Mise en place de sorties structurées, de la validation, de la traçabilité et des contrôles de qualité des réponses.',
-  'Développement de l’interface de démonstration et du processus automatisé de génération des rapports.',
+  { title: 'Concevoir', text: 'Routeur conversationnel et orchestration multi-agents.', tags: ['LangGraph', 'Architecture'] },
+  { title: 'Connecter', text: 'Accès aux données réseau et aux outils d’ingénierie.', tags: ['MCP', 'GraphQL', 'PostgreSQL'] },
+  { title: 'Fiabiliser', text: 'Validation, traçabilité et sorties structurées.', tags: ['Contrôles', 'Qualité'] },
+  { title: 'Livrer', text: 'Interface de démonstration et rapports automatiques.', tags: ['UI', 'Reporting'] },
 ];
 
 const contributionsEn = [
-  'Designed the conversational router, multi-agent architecture and orchestration workflow with LangGraph.',
-  'Built the MCP server connecting the agents to GraphQL, PostgreSQL and Python engineering tools.',
-  'Connected operational questions to topology, inventory and service data, then integrated route calculation, capacity analysis, equipment checks and GNPy signal simulation.',
-  'Implemented structured outputs, validation, traceability and response-quality controls.',
-  'Built the demonstration interface and automated report-generation workflow.',
+  { title: 'Design', text: 'Conversational router and multi-agent orchestration.', tags: ['LangGraph', 'Architecture'] },
+  { title: 'Connect', text: 'Access to network data and engineering tools.', tags: ['MCP', 'GraphQL', 'PostgreSQL'] },
+  { title: 'Make reliable', text: 'Validation, traceability and structured outputs.', tags: ['Controls', 'Quality'] },
+  { title: 'Deliver', text: 'Demonstration interface and automated reports.', tags: ['UI', 'Reporting'] },
 ];
 
 const reliabilityFr = [
@@ -101,77 +99,126 @@ const decisions = isEn ? decisionsEn : decisionsFr;
 const reportHref = isEn ? '/media/feasibility-report-en.html' : '/media/feasibility-report.html';
 const alternateReportHref = isEn ? '/media/feasibility-report.html' : '/media/feasibility-report-en.html';
 const copy = isEn ? {
-  eyebrow: 'Case study at Orange Innovation', intro: 'I built a conversational AI assistant that lets network engineers question Orange’s optical network data in natural language, including topology, inventory, active services and capacity. When a user asks whether a new connection is feasible, the assistant triggers an end-to-end workflow that calculates routes, checks resources, simulates signal quality and produces a verified report.',
-  problem: 'The problem', problemText: 'Answering day-to-day operational questions about the optical network required engineers to consult several tools and data sources. A feasibility request was even more involved: they had to identify a possible route, verify capacity and equipment availability, run a signal-quality simulation and manually combine the results into a decision report.',
-  solution: 'The solution', solutionText: 'I designed and developed a single agentic assistant with two complementary modes. For operational questions, it routes each request to controlled tools that query topology, inventory, service and capacity data. For a feasibility request, it launches a complete workflow, verifies the consistency of the calculations and generates a report that engineers can review and share.',
-  contribution: 'My contribution', contributionText: 'The parts of the system I personally designed and implemented.',
-  context: 'Project context', contextText: 'Developed during my final-year internship at Orange Innovation. The demonstrations use anonymized data. The source code and internal datasets remain the property of Orange; the architecture, workflows and generated outputs shown here use material prepared to respect the project’s confidentiality requirements.',
+  eyebrow: 'Case study at Orange Innovation', intro: 'I designed Andiamo, a conversational assistant for querying Orange optical-network data in natural language. A feasibility request automatically triggers the complete engineering analysis and report generation.',
+  problem: 'Before', problemText: 'Engineers had to move between separate tools to cross-check topology, inventory, services and capacity.',
+  solution: 'With Andiamo', solutionText: 'One conversation answers everyday questions and launches the full feasibility workflow when needed.',
+  contribution: 'My contribution', contributionText: 'From architecture to a demonstrable product.',
+  context: 'Project context', contextText: 'Final-year internship at Orange Innovation. Demonstrations use anonymized data; source code and internal datasets remain Orange property.',
+  chatLabel: 'How the assistant is used', chatPrompt: 'Ask in natural language', chatQuestionOne: 'Which services use this network link?', chatQuestionTwo: 'Can this new optical connection be deployed?', chatRouter: 'Andiamo identifies the intent', chatAnswer: 'Network answer', chatAnswerText: 'Topology · Inventory · Services · Capacity', chatWorkflow: 'Feasibility workflow', chatWorkflowText: 'Route · Equipment · Signal · Report',
   demos: 'Demos', demosTitle: 'See the workflow in action.', demosText: 'Short extracts from an internal engineering prototype. All visible data has been anonymized.',
   report: 'Generated report', reportTitle: 'The final decision, with the evidence needed to review it.', reportText: 'The English report summarizes the selected route, available capacity, required equipment and signal-quality simulation. The original detailed report remains available in French.', reportCta: 'Open the English report', reportOriginalCta: 'View the original French report', reportFrame: 'English feasibility report generated by Andiamo Agent',
-  architectureTitle: 'One assistant, two response paths.', architectureText: 'A router first identifies the request. A standard operational question is answered from controlled network-data tools. A feasibility request activates the full engineering workflow, where deterministic software performs the calculations and validation steps check the result before a report is generated.', flow: 'From a network question to the right level of analysis',
+  architectureTitle: 'One assistant, two response paths.', architectureText: 'The router selects either a direct data answer or a verified engineering workflow.', flow: 'From a network question to the right level of analysis',
   question: 'Network question', questionText: 'Topology, inventory, services, capacity or feasibility', agents: 'Router and agents', network: 'Network data', route: 'Engineering tools', simulation: 'GNPy simulation', answer: 'Answer or report', answerText: 'Operational answer or verified feasibility report',
-  reliability: 'Reliability by design', reliabilityText: 'The LLM does not calculate network feasibility by itself. It selects and coordinates deterministic engineering tools. Route calculations, database queries and signal simulations remain handled by specialized software, while validation steps check that the final answer is complete and consistent before it is returned.',
+  reliability: 'Reliability by design', reliabilityText: 'The LLM coordinates approved tools; it does not perform the engineering calculations itself.',
   decisions: 'Key engineering decisions', decisionsText: 'The main technical choices and the problem that required the most care.',
 } : {
-  eyebrow: 'Étude de cas chez Orange Innovation', intro: 'J’ai développé un assistant IA conversationnel qui permet aux ingénieurs d’interroger en langage naturel les données du réseau optique d’Orange : topologie, inventaire, services actifs et capacité. Lorsqu’un utilisateur demande si une nouvelle liaison est réalisable, le même assistant déclenche un workflow complet qui calcule les chemins, contrôle les ressources, simule la qualité du signal et produit un rapport vérifié.',
-  problem: 'Le problème', problemText: 'Pour répondre aux questions opérationnelles du quotidien sur le réseau optique, les ingénieurs devaient consulter plusieurs outils et sources de données. Une demande de faisabilité était encore plus complexe : il fallait identifier un chemin possible, vérifier la capacité et les équipements disponibles, lancer une simulation de qualité du signal, puis réunir manuellement les résultats dans un rapport de décision.',
-  solution: 'La solution', solutionText: 'J’ai conçu et développé un assistant agentique unique avec deux modes complémentaires. Pour une question métier, il dirige la demande vers des outils contrôlés qui interrogent la topologie, l’inventaire, les services et la capacité. Pour une demande de faisabilité, il lance le workflow complet, vérifie la cohérence des calculs et génère un rapport que les ingénieurs peuvent relire et partager.',
-  contribution: 'Ma contribution', contributionText: 'Les éléments du système que j’ai personnellement conçus et développés.',
-  context: 'Contexte du projet', contextText: 'Projet développé pendant mon stage de fin d’études chez Orange Innovation. Les démonstrations utilisent des données anonymisées. Le code source et les jeux de données internes restent la propriété d’Orange ; l’architecture, les workflows et les résultats présentés ici utilisent des supports préparés dans le respect des exigences de confidentialité du projet.',
+  eyebrow: 'Étude de cas chez Orange Innovation', intro: 'J’ai conçu Andiamo, un assistant conversationnel pour interroger en langage naturel les données du réseau optique d’Orange. Une demande de faisabilité déclenche automatiquement l’analyse d’ingénierie complète et la génération du rapport.',
+  problem: 'Avant', problemText: 'Les ingénieurs passaient d’un outil à l’autre pour croiser topologie, inventaire, services et capacité.',
+  solution: 'Avec Andiamo', solutionText: 'Une conversation répond aux questions courantes et lance l’étude de faisabilité complète quand elle est nécessaire.',
+  contribution: 'Ma contribution', contributionText: 'De l’architecture au produit démontrable.',
+  context: 'Contexte du projet', contextText: 'Stage de fin d’études chez Orange Innovation. Démonstrations sur données anonymisées ; le code et les données internes restent la propriété d’Orange.',
+  chatLabel: 'Comment utiliser l’assistant', chatPrompt: 'Question en langage naturel', chatQuestionOne: 'Quels services utilisent cette liaison ?', chatQuestionTwo: 'Cette nouvelle liaison optique est-elle réalisable ?', chatRouter: 'Andiamo identifie l’intention', chatAnswer: 'Réponse réseau', chatAnswerText: 'Topologie · Inventaire · Services · Capacité', chatWorkflow: 'Étude de faisabilité', chatWorkflowText: 'Chemin · Équipements · Signal · Rapport',
   demos: 'Démonstrations', demosTitle: 'Voir le parcours en action.', demosText: 'Extraits courts d’un prototype d’ingénierie interne. Toutes les données visibles sont anonymisées.',
   report: 'Rapport généré', reportTitle: 'La décision finale, accompagnée des éléments nécessaires pour la vérifier.', reportText: 'Le rapport rassemble le chemin retenu, la capacité disponible, les équipements nécessaires et la simulation de la qualité du signal.', reportCta: 'Ouvrir le rapport français', reportOriginalCta: 'Voir la synthèse anglaise', reportFrame: 'Rapport français de faisabilité généré par Andiamo Agent',
-  architectureTitle: 'Un assistant, deux parcours de réponse.', architectureText: 'Un routeur identifie d’abord la demande. Une question opérationnelle reçoit une réponse issue des outils contrôlés d’accès aux données réseau. Une demande de faisabilité active le workflow d’ingénierie complet : les logiciels spécialisés exécutent les calculs, puis des étapes de validation contrôlent le résultat avant la génération du rapport.', flow: 'De la question réseau au bon niveau d’analyse',
+  architectureTitle: 'Un assistant, deux parcours de réponse.', architectureText: 'Le routeur sélectionne soit une réponse directe issue des données, soit un workflow d’ingénierie vérifié.', flow: 'De la question réseau au bon niveau d’analyse',
   question: 'Question réseau', questionText: 'Topologie, inventaire, services, capacité ou faisabilité', agents: 'Routeur et agents', network: 'Données réseau', route: 'Outils d’ingénierie', simulation: 'Simulation GNPy', answer: 'Réponse ou rapport', answerText: 'Réponse opérationnelle ou rapport de faisabilité vérifié',
-  reliability: 'Fiabilité dès la conception', reliabilityText: 'Le modèle de langage ne calcule pas lui-même la faisabilité du réseau. Il sélectionne et coordonne des outils d’ingénierie déterministes. Les calculs de chemin, les requêtes en base et les simulations du signal restent exécutés par des logiciels spécialisés. Des étapes de validation vérifient ensuite que la réponse finale est complète et cohérente.',
+  reliability: 'Fiabilité dès la conception', reliabilityText: 'Le modèle coordonne des outils approuvés ; il n’effectue pas lui-même les calculs d’ingénierie.',
   decisions: 'Choix techniques clés', decisionsText: 'Les principales décisions d’architecture et la difficulté qui a demandé le plus de rigueur.',
 };
 ---
 
 <section id="orange-case-study" class="border-b border-blue-100 bg-white px-6 py-24 text-slate-950 lg:px-10 lg:py-32">
   <div class="mx-auto max-w-7xl">
-    <div class="grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
+    <div class="grid items-start gap-12 lg:grid-cols-[.78fr_1.22fr] lg:gap-20">
       <div>
         <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.eyebrow}</p>
         <h2 class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.035em] sm:text-5xl">Andiamo Agent</h2>
         <p class="mt-5 text-lg leading-relaxed text-slate-600">
           {copy.intro}
         </p>
-        <aside class="mt-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-          <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.context}</p>
-          <p class="mt-3 text-sm leading-relaxed text-slate-600">{copy.contextText}</p>
-        </aside>
+        <div class="mt-8 grid gap-3">
+          <article class="grid grid-cols-[auto_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <span class="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">01</span>
+            <div>
+              <p class="text-sm font-semibold text-slate-800">{copy.problem}</p>
+              <p class="mt-1 text-sm leading-relaxed text-slate-500">{copy.problemText}</p>
+            </div>
+          </article>
+          <article class="grid grid-cols-[auto_1fr] gap-4 rounded-2xl border border-blue-200 bg-blue-50 p-5">
+            <span class="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-500">02</span>
+            <div>
+              <p class="text-sm font-semibold text-blue-800">{copy.solution}</p>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">{copy.solutionText}</p>
+            </div>
+          </article>
+        </div>
       </div>
 
-      <div class="grid gap-8 sm:grid-cols-2">
-        <article class="rounded-2xl border border-blue-100 bg-slate-50 p-6">
-          <span class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">{copy.problem}</span>
-          <p class="mt-4 leading-relaxed text-slate-700">
-            {copy.problemText}
-          </p>
-        </article>
-        <article class="rounded-2xl border border-blue-200 bg-blue-50 p-6">
-          <span class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.solution}</span>
-          <p class="mt-4 leading-relaxed text-slate-700">
-            {copy.solutionText}
-          </p>
-        </article>
+      <div class="overflow-hidden rounded-[1.75rem] border border-blue-100 bg-[#f8fbff] shadow-2xl shadow-blue-950/10">
+        <div class="flex items-center justify-between border-b border-blue-100 bg-white px-5 py-4">
+          <div class="flex items-center gap-3">
+            <span class="grid h-9 w-9 place-items-center rounded-xl bg-blue-600 font-mono text-[10px] font-semibold text-white">AN</span>
+            <div>
+              <p class="text-sm font-semibold text-slate-950">Andiamo</p>
+              <p class="text-xs text-slate-400">{copy.chatLabel}</p>
+            </div>
+          </div>
+          <span class="flex items-center gap-2 text-xs text-emerald-600"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>Online</span>
+        </div>
+        <div class="p-5 sm:p-7">
+          <p class="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">{copy.chatPrompt}</p>
+          <div class="mt-3 grid gap-3 sm:grid-cols-2">
+            <div class="rounded-2xl rounded-tr-sm bg-white p-4 text-sm font-medium text-slate-700 shadow-sm ring-1 ring-blue-100">“{copy.chatQuestionOne}”</div>
+            <div class="rounded-2xl rounded-tr-sm bg-white p-4 text-sm font-medium text-slate-700 shadow-sm ring-1 ring-blue-100">“{copy.chatQuestionTwo}”</div>
+          </div>
+
+          <div class="relative my-6 flex items-center justify-center">
+            <span class="absolute inset-x-0 h-px bg-blue-100"></span>
+            <span class="relative rounded-full border border-blue-200 bg-white px-4 py-2 text-xs font-semibold text-blue-700 shadow-sm">{copy.chatRouter}</span>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div class="relative overflow-hidden rounded-2xl border border-cyan-200 bg-cyan-50 p-5">
+              <span class="absolute right-4 top-3 font-mono text-4xl font-semibold text-cyan-200/70">01</span>
+              <span class="inline-block h-2 w-8 rounded-full bg-cyan-500"></span>
+              <p class="mt-4 font-semibold text-slate-950">{copy.chatAnswer}</p>
+              <p class="mt-2 text-xs leading-relaxed text-slate-500">{copy.chatAnswerText}</p>
+            </div>
+            <div class="relative overflow-hidden rounded-2xl border border-blue-200 bg-blue-600 p-5 text-white shadow-lg shadow-blue-600/15">
+              <span class="absolute right-4 top-3 font-mono text-4xl font-semibold text-white/15">02</span>
+              <span class="inline-block h-2 w-8 rounded-full bg-cyan-300"></span>
+              <p class="mt-4 font-semibold">{copy.chatWorkflow}</p>
+              <p class="mt-2 text-xs leading-relaxed text-blue-100">{copy.chatWorkflowText}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="mt-16 grid gap-8 rounded-3xl border border-blue-100 bg-[#f8fbff] p-7 sm:p-9 lg:grid-cols-[.62fr_1.38fr] lg:gap-14">
-      <div>
+    <div class="mt-16">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.contribution}</p>
-        <h3 class="mt-4 text-2xl font-semibold tracking-tight text-slate-950">{copy.contributionText}</h3>
+        <h3 class="text-2xl font-semibold tracking-tight text-slate-950">{copy.contributionText}</h3>
       </div>
-      <ol class="grid gap-3 sm:grid-cols-2">
+      <ol class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {contributions.map((item, index) => (
-          <li class="flex gap-4 rounded-2xl border border-blue-100 bg-white p-5 text-sm leading-relaxed text-slate-600">
-            <span class="font-mono text-xs font-semibold text-blue-500">0{index + 1}</span>
-            <span>{item}</span>
+          <li class="group relative min-h-48 overflow-hidden rounded-2xl border border-blue-100 bg-[#f8fbff] p-6 transition hover:-translate-y-1 hover:border-blue-300 hover:bg-white hover:shadow-xl hover:shadow-blue-950/5">
+            <span class="absolute -right-1 -top-4 font-mono text-7xl font-semibold text-blue-100 transition group-hover:text-cyan-100">0{index + 1}</span>
+            <span class="relative inline-block h-1.5 w-10 rounded-full bg-blue-600"></span>
+            <h4 class="relative mt-7 text-xl font-semibold text-slate-950">{item.title}</h4>
+            <p class="relative mt-2 text-sm leading-relaxed text-slate-500">{item.text}</p>
+            <div class="relative mt-5 flex flex-wrap gap-1.5">
+              {item.tags.map((tag) => <span class="rounded-full border border-blue-100 bg-white px-2.5 py-1 font-mono text-[10px] text-blue-700">{tag}</span>)}
+            </div>
           </li>
         ))}
       </ol>
     </div>
+
+    <aside class="mt-8 flex flex-col gap-2 border-l-2 border-blue-500 pl-4 sm:flex-row sm:items-center sm:justify-between">
+      <p class="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-600">{copy.context}</p>
+      <p class="max-w-4xl text-xs leading-relaxed text-slate-500">{copy.contextText}</p>
+    </aside>
 
     <div class="mt-16 grid gap-px overflow-hidden rounded-2xl border border-blue-100 bg-blue-100 sm:grid-cols-2 lg:grid-cols-4">
       {results.map((result) => (
@@ -234,7 +281,7 @@ const copy = isEn ? {
       </div>
       <div class="rounded-2xl border border-blue-100 bg-white p-5 shadow-xl shadow-blue-900/5 sm:p-7">
         <p class="mb-6 text-sm font-medium text-slate-500">{copy.flow}</p>
-        <div class="grid items-stretch gap-3 sm:grid-cols-[1fr_auto_1.35fr_auto_1fr]">
+        <div class="grid items-stretch gap-3 sm:grid-cols-[1fr_auto_1.25fr_auto_1.1fr]">
           <div class="rounded-xl border border-cyan-200 bg-cyan-50 p-4">
             <span class="grid h-8 w-8 place-items-center rounded-full bg-cyan-500 font-mono text-xs font-semibold text-white">01</span>
             <p class="mt-4 font-semibold text-slate-950">{copy.question}</p>
@@ -251,10 +298,15 @@ const copy = isEn ? {
             </div>
           </div>
           <span class="hidden self-center text-xl text-blue-300 sm:block">→</span>
-          <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-            <span class="grid h-8 w-8 place-items-center rounded-full bg-emerald-500 font-mono text-xs font-semibold text-white">03</span>
-            <p class="mt-4 font-semibold text-slate-950">{copy.answer}</p>
-            <p class="mt-1 text-xs leading-relaxed text-slate-500">{copy.answerText}</p>
+          <div class="grid gap-2">
+            <div class="rounded-xl border border-cyan-200 bg-cyan-50 p-4">
+              <p class="font-semibold text-slate-950">{copy.chatAnswer}</p>
+              <p class="mt-1 text-xs leading-relaxed text-slate-500">{copy.chatAnswerText}</p>
+            </div>
+            <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+              <p class="font-semibold text-slate-950">{copy.chatWorkflow}</p>
+              <p class="mt-1 text-xs leading-relaxed text-slate-500">{copy.chatWorkflowText}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -284,12 +336,15 @@ const copy = isEn ? {
         <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{copy.decisions}</p>
         <h3 class="mt-4 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{copy.decisionsText}</h3>
       </div>
-      <div class="mt-10 grid gap-5 lg:grid-cols-3">
+      <div class="mt-10 grid gap-3 lg:grid-cols-3">
         {decisions.map((item) => (
-          <article class="rounded-2xl border border-blue-100 bg-[#f8fbff] p-6 sm:p-7">
-            <h4 class="text-lg font-semibold text-slate-950">{item.title}</h4>
-            <p class="mt-3 text-sm leading-relaxed text-slate-600">{item.text}</p>
-          </article>
+          <details class="group rounded-2xl border border-blue-100 bg-[#f8fbff] p-6 open:border-blue-300 open:bg-white open:shadow-lg open:shadow-blue-950/5">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-slate-950">
+              {item.title}
+              <span class="grid h-8 w-8 flex-none place-items-center rounded-full border border-blue-200 bg-white text-blue-600 transition group-open:rotate-45">+</span>
+            </summary>
+            <p class="mt-4 border-t border-blue-100 pt-4 text-sm leading-relaxed text-slate-600">{item.text}</p>
+          </details>
         ))}
       </div>
     </section>
